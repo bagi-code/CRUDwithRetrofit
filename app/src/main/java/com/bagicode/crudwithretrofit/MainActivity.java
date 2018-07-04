@@ -6,7 +6,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
-import com.bagicode.crudwithretrofit.fragment.ReadFragment;
+import com.bagicode.crudwithretrofit.view.fragment.ReadFragment;
 
 public class MainActivity extends AppCompatActivity {
 

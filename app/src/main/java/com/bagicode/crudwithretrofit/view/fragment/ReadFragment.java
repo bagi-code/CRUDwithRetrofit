@@ -1,6 +1,7 @@
-package com.bagicode.crudwithretrofit.fragment;
+package com.bagicode.crudwithretrofit.view.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -17,6 +18,7 @@ import com.bagicode.crudwithretrofit.api.BaseApiService;
 import com.bagicode.crudwithretrofit.api.UtilsAPI;
 import com.bagicode.crudwithretrofit.modul.ReadDataResponse;
 import com.bagicode.crudwithretrofit.modul.Record;
+import com.bagicode.crudwithretrofit.view.activity.AddActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +68,14 @@ public class ReadFragment extends Fragment {
         rc_list_rating.setItemAnimator(new DefaultItemAnimator());
         rc_list_rating.setAdapter(CategoryAdapter);
 
-        dataAttachmentCategory();
+        rootView.findViewById(R.id.fab_add).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent goAdd = new Intent(getActivity(), AddActivity.class);
+                startActivity(goAdd);
+
+            }
+        });
 
         return rootView;
     }
@@ -133,4 +142,10 @@ public class ReadFragment extends Fragment {
                 });
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        dataAttachmentCategory();
+    }
 }
