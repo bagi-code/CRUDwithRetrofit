@@ -72,6 +72,13 @@ public class ReadFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent goAdd = new Intent(getActivity(), AddActivity.class);
+                goAdd.putExtra("intent_id", "");
+                goAdd.putExtra("intent_tgl", "");
+                goAdd.putExtra("intent_masuk", "");
+                goAdd.putExtra("intent_keluar", "");
+                goAdd.putExtra("intent_ketmasuk", "");
+                goAdd.putExtra("intent_ketkeluar", "");
+                goAdd.putExtra("intent_action", "insert");
                 startActivity(goAdd);
 
             }

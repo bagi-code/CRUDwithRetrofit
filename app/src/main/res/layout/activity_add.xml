@@ -44,4 +44,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <Button
+        android:layout_marginTop="18dp"
+        android:id="@+id/btn_edit"
+        android:text="Edit"
+        android:textAllCaps="false"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:layout_marginTop="18dp"
+        android:id="@+id/btn_delete"
+        android:text="Delete"
+        android:textAllCaps="false"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 </LinearLayout>

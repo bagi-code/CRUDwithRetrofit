@@ -3,6 +3,7 @@ package com.bagicode.crudwithretrofit.view.activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -20,6 +21,12 @@ public class AddActivity extends AppCompatActivity {
     private BaseApiService mApiService;
 
     private EditText et_masuk, et_keluar, et_ketmasuk, et_ketkeluar;
+    private Button btn_save, btn_edit, btn_delete;
+
+    private String intent_id= "", intent_tgl= "",
+            intent_masuk = "", intent_keluar = "",
+            intent_ketmasuk = "", intent_ketkeluar = "",
+            intent_action = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,12 +35,37 @@ public class AddActivity extends AppCompatActivity {
 
         mApiService = UtilsAPI.getApiService();
 
+        intent_id= getIntent().getStringExtra("intent_id");
+        intent_tgl= getIntent().getStringExtra("intent_tgl");
+        intent_masuk= getIntent().getStringExtra("intent_masuk");
+        intent_keluar= getIntent().getStringExtra("intent_keluar");
+        intent_ketmasuk= getIntent().getStringExtra("intent_ketmasuk");
+        intent_ketkeluar= getIntent().getStringExtra("intent_ketkeluar");
+        intent_action= getIntent().getStringExtra("intent_action");
+
         et_masuk = findViewById(R.id.et_masuk);
         et_keluar = findViewById(R.id.et_keluar);
         et_ketmasuk = findViewById(R.id.et_ketmasuk);
         et_ketkeluar = findViewById(R.id.et_ketkeluar);
+        btn_save = findViewById(R.id.btn_save);
+        btn_edit = findViewById(R.id.btn_edit);
+        btn_delete = findViewById(R.id.btn_delete);
 
-        findViewById(R.id.btn_save).setOnClickListener(new View.OnClickListener() {
+        if (intent_action.equals("edit")) {
+            et_masuk.setText(intent_masuk);
+            et_keluar.setText(intent_keluar);
+            et_ketmasuk.setText(intent_ketmasuk);
+            et_ketkeluar.setText(intent_ketkeluar);
+
+//            btn_save.setText("Edit");
+            btn_save.setVisibility(View.GONE);
+        } else {
+            btn_edit.setVisibility(View.GONE);
+            btn_delete.setVisibility(View.GONE);
+
+        }
+
+        btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
