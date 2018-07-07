@@ -24,4 +24,15 @@ public interface BaseApiService {
                                    @Field("ket_masuk") String ket_masuk,
                                    @Field("ket_keluar") String ket_keluar);
 
+    @FormUrlEncoded
+    @POST("AKfycbxB5RVPFfecAjzOwfcc7ZX2TGYwcKV8_A6qR4eD/exec")
+    Call<MessageResponse> deleteData (@Field("action") String action,
+                                   @Field("tabelName") String tabelName,
+                                   @Field("masuk") String masuk,
+                                   @Field("keluar") String keluar,
+                                   @Field("ket_masuk") String ket_masuk,
+                                   @Field("ket_keluar") String ket_keluar,
+                                   @Field("id") String id,
+                                   @Field("tgl") String tgl);
+
 }

@@ -20,7 +20,7 @@ public class AddActivity extends AppCompatActivity {
 
     private BaseApiService mApiService;
 
-    private EditText et_masuk, et_keluar, et_ketmasuk, et_ketkeluar;
+    private EditText et_masuk, et_keluar, et_ketmasuk, et_ketkeluar, et_tgl;
     private Button btn_save, btn_edit, btn_delete;
 
     private String intent_id= "", intent_tgl= "",
@@ -47,6 +47,7 @@ public class AddActivity extends AppCompatActivity {
         et_keluar = findViewById(R.id.et_keluar);
         et_ketmasuk = findViewById(R.id.et_ketmasuk);
         et_ketkeluar = findViewById(R.id.et_ketkeluar);
+        et_tgl = findViewById(R.id.et_tgl);
         btn_save = findViewById(R.id.btn_save);
         btn_edit = findViewById(R.id.btn_edit);
         btn_delete = findViewById(R.id.btn_delete);
@@ -56,12 +57,15 @@ public class AddActivity extends AppCompatActivity {
             et_keluar.setText(intent_keluar);
             et_ketmasuk.setText(intent_ketmasuk);
             et_ketkeluar.setText(intent_ketkeluar);
+            et_tgl.setText(intent_tgl);
 
 //            btn_save.setText("Edit");
             btn_save.setVisibility(View.GONE);
+            et_tgl.setVisibility(View.VISIBLE);
         } else {
             btn_edit.setVisibility(View.GONE);
             btn_delete.setVisibility(View.GONE);
+            et_tgl.setVisibility(View.GONE);
 
         }
 
@@ -73,6 +77,7 @@ public class AddActivity extends AppCompatActivity {
                 String skeluar = et_keluar.getText().toString();
                 String sketmasuk = et_ketmasuk.getText().toString();
                 String sketkeluar = et_ketkeluar.getText().toString();
+
 
                 if (smasuk.equals("")) {
                     et_masuk.setError("Silahkan isi value masuk");
@@ -88,6 +93,33 @@ public class AddActivity extends AppCompatActivity {
 
             }
         });
+
+        btn_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String smasuk = et_masuk.getText().toString();
+                String skeluar = et_keluar.getText().toString();
+                String sketmasuk = et_ketmasuk.getText().toString();
+                String sketkeluar = et_ketkeluar.getText().toString();
+                String stgl = et_tgl.getText().toString();
+
+                if (smasuk.equals("")) {
+                    et_masuk.setError("Silahkan isi value masuk");
+                } else if (skeluar.equals("")) {
+                    et_keluar.setError("Silahkan isi value keluar");
+                } else if (sketmasuk.equals("")) {
+                    et_ketmasuk.setError("Silahkan isi value keterangan keluar");
+                } else if (sketkeluar.equals("")) {
+                    et_ketkeluar.setError("Silahkan isi value keterangan masuk");
+                } else if (stgl.equals("")) {
+                    et_tgl.setError("Silahkan isi value keterangan tanggal");
+                } else {
+                    deleteData(smasuk, skeluar, sketmasuk, sketkeluar, intent_id, stgl);
+                }
+
+            }
+        });
     }
 
     private void dataAdd(String masuk, String keluar, String ket_masuk, String ket_keluar) {
@@ -99,6 +131,43 @@ public class AddActivity extends AppCompatActivity {
                 keluar,
                 ket_masuk,
                 ket_keluar)
+                .enqueue(new Callback<MessageResponse>() {
+                    @Override
+                    public void onResponse(Call<MessageResponse> call, Response<MessageResponse> response) {
+
+                        if (response.isSuccessful()) {
+                            if (response.body().getCode().equals("200")) {
+                                Toast.makeText(AddActivity.this, response.body().getMsg(), Toast.LENGTH_SHORT).show();
+                                finish();
+
+                            } else {
+                                Toast.makeText(AddActivity.this, response.body().getMsg(), Toast.LENGTH_SHORT).show();
+                            }
+
+                        } else {
+                            Toast.makeText(AddActivity.this, "Please try again, server is down", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+
+                    @Override
+                    public void onFailure(Call<MessageResponse> call, Throwable t) {
+                        Toast.makeText(AddActivity.this, "Please try again, server is down onfail", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void deleteData(String masuk, String keluar, String ket_masuk, String ket_keluar, String id, String tgl) {
+
+        mApiService.deleteData(
+                "update",
+                "BCA",
+                masuk,
+                keluar,
+                ket_masuk,
+                ket_keluar,
+                id,
+                tgl)
                 .enqueue(new Callback<MessageResponse>() {
                     @Override
                     public void onResponse(Call<MessageResponse> call, Response<MessageResponse> response) {

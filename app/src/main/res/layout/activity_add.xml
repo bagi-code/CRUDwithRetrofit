@@ -36,6 +36,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <EditText
+        android:visibility="gone"
+        android:inputType="text"
+        android:id="@+id/et_tgl"
+        android:hint="dd-MM-yyyy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <Button
         android:layout_marginTop="18dp"
         android:id="@+id/btn_save"
