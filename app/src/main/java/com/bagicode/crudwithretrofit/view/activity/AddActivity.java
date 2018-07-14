@@ -115,8 +115,16 @@ public class AddActivity extends AppCompatActivity {
                 } else if (stgl.equals("")) {
                     et_tgl.setError("Silahkan isi value keterangan tanggal");
                 } else {
-                    deleteData(smasuk, skeluar, sketmasuk, sketkeluar, intent_id, stgl);
+                    editData(smasuk, skeluar, sketmasuk, sketkeluar, intent_id, stgl);
                 }
+
+            }
+        });
+
+        btn_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteData(intent_id);
 
             }
         });
@@ -157,9 +165,9 @@ public class AddActivity extends AppCompatActivity {
                 });
     }
 
-    private void deleteData(String masuk, String keluar, String ket_masuk, String ket_keluar, String id, String tgl) {
+    private void editData(String masuk, String keluar, String ket_masuk, String ket_keluar, String id, String tgl) {
 
-        mApiService.deleteData(
+        mApiService.editData(
                 "update",
                 "BCA",
                 masuk,
@@ -193,4 +201,37 @@ public class AddActivity extends AppCompatActivity {
                     }
                 });
     }
+
+    private void deleteData(String id) {
+
+        mApiService.deleteData(
+                "delete",
+                "BCA",
+                id)
+                .enqueue(new Callback<MessageResponse>() {
+                    @Override
+                    public void onResponse(Call<MessageResponse> call, Response<MessageResponse> response) {
+
+                        if (response.isSuccessful()) {
+                            if (response.body().getCode().equals("200")) {
+                                Toast.makeText(AddActivity.this, response.body().getMsg(), Toast.LENGTH_SHORT).show();
+                                finish();
+
+                            } else {
+                                Toast.makeText(AddActivity.this, response.body().getMsg(), Toast.LENGTH_SHORT).show();
+                            }
+
+                        } else {
+                            Toast.makeText(AddActivity.this, "Please try again, server is down", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+
+                    @Override
+                    public void onFailure(Call<MessageResponse> call, Throwable t) {
+                        Toast.makeText(AddActivity.this, "Please try again, server is down onfail", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
 }
