@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/ll_layout_utama"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="10dp"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:text=""
+        android:background="#d4d4d4"
+        android:id="@+id/keterangan"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:text=""
+        android:background="#d4d4d4"
+        android:layout_marginTop="5dp"
+        android:id="@+id/tanggal"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

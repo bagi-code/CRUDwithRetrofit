@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.bagicode.crudwithretrofit.R;
@@ -19,6 +20,7 @@ import com.bagicode.crudwithretrofit.api.UtilsAPI;
 import com.bagicode.crudwithretrofit.modul.ReadDataResponse;
 import com.bagicode.crudwithretrofit.modul.Record;
 import com.bagicode.crudwithretrofit.view.activity.AddActivity;
+import com.cooltechworks.views.shimmer.ShimmerRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +42,9 @@ public class ReadFragment extends Fragment {
     private BaseApiService mApiService;
     private CategoryAdapter CategoryAdapter;
 
+    private ProgressBar pb_load;
+    private ShimmerRecyclerView shimmer_recycler_view;
+
     public ReadFragment() {
         // Required empty public constructor
     }
@@ -54,6 +59,8 @@ public class ReadFragment extends Fragment {
         mApiService = UtilsAPI.getApiService();
 
         rc_list_rating = (RecyclerView) rootView.findViewById(R.id.rc_list_category);
+        pb_load = (ProgressBar) rootView.findViewById(R.id.pb_load);
+        shimmer_recycler_view = (ShimmerRecyclerView) rootView.findViewById(R.id.shimmer_recycler_view);
 
         // horizontal
         LinearLayoutManager layoutManagerCategory
@@ -100,6 +107,8 @@ public class ReadFragment extends Fragment {
                     @Override
                     public void onResponse(Call<ReadDataResponse> call, Response<ReadDataResponse> response) {
 
+                        pb_load.setVisibility(View.GONE);
+                        shimmer_recycler_view.hideShimmerAdapter();
                         if (response.isSuccessful()) {
                             try {
                                 int total = response.body().getRecords().size();
@@ -144,6 +153,8 @@ public class ReadFragment extends Fragment {
 
                     @Override
                     public void onFailure(Call<ReadDataResponse> call, Throwable t) {
+                        pb_load.setVisibility(View.GONE);
+                        shimmer_recycler_view.hideShimmerAdapter();
                         Toast.makeText(getActivity(), "Please try again, server is down onfail", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -152,6 +163,9 @@ public class ReadFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
+        pb_load.setVisibility(View.GONE);
+        shimmer_recycler_view.showShimmerAdapter();
 
         dataAttachmentCategory();
     }
